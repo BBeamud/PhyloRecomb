@@ -16,10 +16,9 @@ function usage {
     echo "  -c|--coords        file with recombination coordinates" 
     echo "  -ba|--balignment    path to the alignment for congruence testing (background alignment)"
     echo "  -ra|--ralignment    path to the alignment for relatives analyses (representative alignment)"
- ####### Si no se pone nada, poner uno por defecto 
-    echo "  -t|--threads      threads to use. DEFAULT: 1/auto?" ## PUT DEFAULT. 
-    echo "  -o|--outdir       outdir to save all results" ## poner por defecto nombre archivo!!
-    echo "  -s|--save         save intermediate files. DEFAULT: NO" ## Hacerlo!! 
+    echo "  -t|--threads      threads to use" 
+    echo "  -o|--outdir       outdir to save all results" 
+    echo "  -s|--save         save intermediate files."
     exit 1
 }
 usage
@@ -99,7 +98,6 @@ declare -A SUB_MAP
 while read line; do
 echo "-----------------------------------------------------------" 
 start=`echo $line | cut -d ' ' -f2 | sed 's/ //g'`
-# Sumamos 1 porque seqtk coge una posicion mas de la de la coordenada (ARREGLAR DE FORMA MAS ELEGANTE!!) 
 start=$((start +1))
 end=`echo $line | cut -d ' ' -f3 | sed 's/ //g'`
 sub=`echo $line | cut -d ' ' -f4 | sed 's/ //g'`
@@ -138,7 +136,6 @@ if [ "$DETECTION" == 'yes' ]||[ "$DETECTION" == 'y' ]; then
 	declare -A SUB_MAP
 	while read line; do
 	start=`echo $line | cut -d ' ' -f2 | sed 's/ //g'`
-	# Sumamos 1 porque seqtk coge una posicion mas de la de la coordenada (ARREGLAR DE FORMA MAS ELEGANTE!!) 
 	start=$((start +1))
 	end=`echo $line | cut -d ' ' -f3 | sed 's/ //g'`
 	sub=`echo $line | cut -d ' ' -f4 | sed 's/ //g'`
@@ -175,11 +172,8 @@ name=`echo $tree | sed 's/.fasta.treefile//g'`
 cat $tree | sed 's/:0.[0-9]*//g' > $name.tre
 tre=$name".tre"
 taxa_id=`echo $name.tre | sed 's/_subaln.tre//g'`
-ref_sub=`grep -m 1 '>' ../$ALN | tr -d '>'` 
-#alt=`echo "$SUBTYPES" | sort | uniq | grep -v $ref_sub` # (Option if we want only to test against sample subtypes)
-#int=`echo "$alt"| tr '\n' ','`
-# Comparison against all subypes present in the alignment
-#alt_def="A1,A2,A3,A4,A6,C,D,F1,F2,G,H,J,K,01_AE,A,F"
+ref_sub=`grep -m 1 '>' ../$ALN | tr -d '>'`
+# Comparison against all sequences in the alignment
 alt_def =`grep '>' ../$ALN | tr -d '>' | paste -sd "," - |sed  "s/,$ref_sub//g"`  
 Rscript --vanilla ../scripts/alternative_trees2.R -t $tre -s $taxa_id -r $ref_sub -a $alt_def -p $name
 iqtree -s $name".fasta" -z $name.trees -st DNA -n 0 -zb 10000 -m GTR+F+I+G4 -redo -wsl -pre topotest'_'$name -nt AUTO
@@ -200,13 +194,6 @@ unresolved=`grep 'Number of unresolved' "lmap_"$name".iqtree" | awk '{ print $NF
 # Representative analyses
 assign=`Rscript --vanilla ../scripts/parse_congruence4.r -s $name".results" -r $ref_sub -a $alt_def`
 assign_def=`echo $assign | sed 's/\[1\] //' | sed 's/"//g' | tr ' ' ','`
-# Subset of alignment
-# all=`echo $assign_def | awk -F '|' '{for(i=1;i<=NF;i++) print $i}'`
-# touch 'crlist_'$fragment 
-# while IFS= read -r line; do
-#    grep -i -E '
-#done <<< "$the_list"
-#grep -i -E '>A|>B|>[0-9]*_A|cpx|[0-9]*_B' HIV2_RIP_2017_URFs2018.msa | tr -d '>' | wc -l
 mafft --addfragments $fragment --thread -$T ../$ALN_R > $name"_raln.fasta"
 iqtree  -s $name"_raln.fasta" -st DNA -m GTR+F+I+G4 -bb 1000 -pre cr'_'$name -djc -nt AUTO -redo
 cr_list=`Rscript --vanilla ../scripts/get_brothers_bs70.r -t 'cr_'$name".treefile" -s $name` 
