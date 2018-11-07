@@ -45,7 +45,7 @@ The downloaded directory also contains things that might be useful for PhyloReco
 ### Usage
 
 ```./PhyloRecomb_v.alfa.sh
-```
+
 usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment] [-ra ralignment ] [-o outdir] [-t threads] [-s] \
   -f|--fasta        FASTA file of your recombinant query sequence \
   -d|--detection    'yes' or 'y' for previous recombination detection by jpHMM \
@@ -55,3 +55,4 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
   -t|--threads      threads to use \
   -o|--outdir       outdir to save all results \
   -s|--save         save intermediate files \
+```
