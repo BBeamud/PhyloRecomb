@@ -57,9 +57,12 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
   -s|--save         save intermediate files \
 ```
 
-### Input
+### Input files 
 
 #### With recombination detection 
+
+* ##### FASTA file
+
 
 #### Without recombination detection
 
@@ -67,7 +70,7 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
 
 * ##### COORDS file
 
-  A BED tab-separated file should be passed with the recombination breakpoints/fragments to be evaluated. In the first field    should be the FASTA sequence ID, in the second the position of START of the fragment and in the third field the END of it. 
+  A BED tab-separated file should be passed with the recombination breakpoints/fragments to be evaluated. In the first field    should be the FASTA sequence ID, in the second the START position of the fragment and in the third field the END of it. 
 
   Example: Suppose our sequence name is 3164 the COORDS file would be: 
 
@@ -82,3 +85,5 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
   3164	6853	7153
   3164	7154	7266
   ```
+
+### Output files 
