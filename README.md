@@ -1,6 +1,6 @@
 # PhyloRecomb
 
-Pipeline to independent constrast recombination events by topological tests (ELW) and phylogenetic signal (likelihood mapping analysis). 
+Pipeline to independent contrast recombination events by topological tests (ELW) and phylogenetic signal (likelihood mapping analysis). 
 
 ### Prerequisites
 
@@ -16,7 +16,7 @@ On Ubuntu, you can use apt to install the required packages:
 sudo apt install seqtk iqtree mafft
 ```
 
-Lastly, PhyloRecomb relies on some R packages which can be installed from terminal or manually. 
+Lastly, PhyloRecomb relies on some R packages which can be installed from the terminal or manually. 
 
 ```
 sudo su - -c "R -e \"install.packages('ape', repos='http://cran.rstudio.com/')\""
@@ -25,7 +25,7 @@ sudo su - -c "R -e \"install.packages('phytools', repos='http://cran.rstudio.com
 sudo su - -c "R -e \"install.packages('optparse', repos='http://cran.rstudio.com/')\""
 ```
 
-Optionally, you can download and install jpHMM (http://jphmm.gobics.de/) to detect recombination in first place. 
+Optionally, you can download and install jpHMM (http://jphmm.gobics.de/) to detect recombination in the first place. 
 
 
 ### Installing
