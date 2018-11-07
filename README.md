@@ -56,3 +56,29 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
   -o|--outdir       outdir to save all results \
   -s|--save         save intermediate files \
 ```
+
+### Input
+
+## With recombination detection 
+
+## Without recombination detection
+
+# FASTA file
+
+# COORDS file
+
+A BED tab-separated file should be passed with the recombination breakpoints/fragments to be evaluated. In the first field should be the FASTA sequence ID, in the second the position of START of the fragment and in the third field the END of it. 
+
+Example: Suppose our sequence name is 3164 the COORDS file would be: 
+
+```
+3164	1	3910
+3164	3911	4131
+3164	4132	6180
+3164	6181	6405
+3164	6406	6509
+3164	6510	6719
+3164	6720	6852
+3164	6853	7153
+3164	7154	7266
+```
