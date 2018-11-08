@@ -72,18 +72,42 @@ usage: ./PhyloRecomb_v.alfa.sh  -f <fasta> -d <y|n> -c <.|file> [-ba balignment]
 
   A BED tab-separated file should be passed with the recombination breakpoints/fragments to be evaluated. In the first field    should be the FASTA sequence ID, in the second the START position of the fragment and in the third field the END of it. 
 
-  Example: Suppose our sequence name is 3164 the COORDS file would be: 
+  Example: Suppose our sequence name is 2011 the COORDS file would be: 
 
   ```
-  3164	1	3910
-  3164	3911	4131
-  3164	4132	6180
-  3164	6181	6405
-  3164	6406	6509
-  3164	6510	6719
-  3164	6720	6852
-  3164	6853	7153
-  3164	7154	7266
+  2011	1	1472
+  2011	1473	2378
+  2011	2379	5234
+  2011	5235	5378
+  2011	5379	8731
+  2011	8732	8852
   ```
-
+  
 ### Output files 
+
+The main results are shown in the **[seqid].summary** tab-delim file. The file looks like this:
+```
+# CL: ./PhyloRecomb.sh -f 2011.fasta -c 2011.bed 
+# SEQID: 2011
+START END	SUBTYPE	LMAP(UQ)	CRs
+1	1472	A1.CONSENSUS_A1	1.00%	
+1473	2378	D.CONSENSUS_D|b.consensus_b	14.70%	
+2379	5234	A1.CONSENSUS_A1	1.30%	
+5235	5378	G.CONSENSUS_G|a1.consensus_a1|c.consensus_c	37.10%	
+5379	8731	D.CONSENSUS_D	0.00%	
+8732	8852	A1.CONSENSUS_A1|A2.CONSENSUS_A2	40.60%	
+```
+
+The first and second field correspond to the fragment evaluated (same than above). The third field is the subtype(s) assigned at that fragment based on ELW test. The fourth field highlights the phylogenetic signal of that fragment, concretely the unresolved quartets(UQ) of likelihooh mapping analysis. Lastly, CRs are shown if analysis was set. 
+
+These results, in concrete the coordinates, will be also obtained in a reference-based way (in this case, HXB2) 
+* **[seqid]_hxb2.summary**
+
+If the user wants to explore each fragment evaluation separately, several files will be available for this purposes:
+* **[seqid]\_[fragment].fragment** -> FASTA sequence of the fragment
+* **[seqid]\_[fragment]\_aln.fasta** --> Subalignment of the fragment with background alignment
+* **[seqid]\_[fragment]\_raln.fasta** --> Subalignment of the fragment with representative alignment (if provided)
+* **[seqid]\_[fragment].treefile** --> Original ML tree inferred from above alignment with IQ-TREE in NWK
+* **[seqid]\_[fragment].treefile** --> List of all alternative trees in NWK
+* **[seqid]\_[fragment].results** --> ELW values for each alternative tree evaluated 
+
