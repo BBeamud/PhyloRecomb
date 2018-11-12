@@ -109,5 +109,9 @@ If the user wants to explore each fragment evaluation separately, several files 
 * **[seqid]\_[fragment]\_raln.fasta** --> Subalignment of the fragment with representative alignment (if provided)
 * **[seqid]\_[fragment].treefile** --> Original ML tree inferred from above alignment with IQ-TREE in NWK
 * **[seqid]\_[fragment].treefile** --> List of all alternative trees in NWK
-* **[seqid]\_[fragment].results** --> ELW values for each alternative tree evaluated 
+* **[seqid]\_[fragment].results** --> ELW values for each alternative tree evaluated (in the order of the sequences in the background alignment) 
+
+
+
+
 
