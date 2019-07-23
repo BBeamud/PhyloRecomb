@@ -1,5 +1,5 @@
 #!/bin/bash
-# PhyloRecomb: A pipeline to detect and further evaluated recombination events in HIV-1.
+# PhyloRecomb: A pipeline to detect and further evaluated recombination events in HIV-1 (ALFA VERSION)
 # Author: Beatriz Beamud Aranguren (beatriz.beamud@uv.es) 
 ## Don't work with sh execution! & Bash version >=4 is required.  
 
@@ -16,10 +16,9 @@ function usage {
     echo "  -c|--coords        file with recombination coordinates" 
     echo "  -ba|--balignment    path to the alignment for congruence testing (background alignment)"
     echo "  -ra|--ralignment    path to the alignment for relatives analyses (representative alignment)"
- ####### Si no se pone nada, poner uno por defecto 
-    echo "  -t|--threads      threads to use. DEFAULT: 1/auto?" ## PUT DEFAULT. 
-    echo "  -o|--outdir       outdir to save all results" ## poner por defecto nombre archivo!!
-    echo "  -s|--save         save intermediate files. DEFAULT: NO" ## Hacerlo!! 
+    echo "  -t|--threads      threads to use. DEFAULT: 1/auto?" 
+    echo "  -o|--outdir       outdir to save all results" 
+    echo "  -s|--save         save intermediate files. DEFAULT: NO" 
     exit 1
 }
 usage
@@ -99,7 +98,7 @@ declare -A SUB_MAP
 while read line; do
 echo "-----------------------------------------------------------" 
 start=`echo $line | cut -d ' ' -f2 | sed 's/ //g'`
-# Sumamos 1 porque seqtk coge una posicion mas de la de la coordenada (ARREGLAR DE FORMA MAS ELEGANTE!!) 
+#  seqtk coordenate correction 
 start=$((start +1))
 end=`echo $line | cut -d ' ' -f3 | sed 's/ //g'`
 sub=`echo $line | cut -d ' ' -f4 | sed 's/ //g'`
@@ -138,7 +137,7 @@ if [ "$DETECTION" == 'yes' ]||[ "$DETECTION" == 'y' ]; then
 	declare -A SUB_MAP
 	while read line; do
 	start=`echo $line | cut -d ' ' -f2 | sed 's/ //g'`
-	# Sumamos 1 porque seqtk coge una posicion mas de la de la coordenada (ARREGLAR DE FORMA MAS ELEGANTE!!) 
+	# Correction for seqtk
 	start=$((start +1))
 	end=`echo $line | cut -d ' ' -f3 | sed 's/ //g'`
 	sub=`echo $line | cut -d ' ' -f4 | sed 's/ //g'`
